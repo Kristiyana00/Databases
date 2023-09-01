@@ -1,0 +1,8 @@
+use pc;
+
+--Напишете заявка, която извежда производителите на персонални
+--компютри с честота над 500.SELECT MAKERFROM PRODUCTWHERE MODEL IN (SELECT MODELFROM PCWHERE SPEED > 500);--Напишете заявка, която извежда код, модел и цена на принтерите с найвисока цена.SELECT CODE, MODEL, PRICEFROM PRINTERWHERE PRICE >= ALL (SELECT PRICEFROM PRINTER)--Напишете заявка, която извежда лаптопите, чиято честота е по-ниска от
+--честотата на всички персонални компютри.SELECT *FROM LAPTOPWHERE SPEED < ALL (SELECT DISTINCT SPEEDFROM PC);--Напишете заявка, която извежда модела и цената на продукта (PC,
+--лаптоп или принтер) с най-висока цена.SELECT T.MODEL, T.PRICEFROM (SELECT MODEL, PRICEFROM PCUNION SELECT MODEL, PRICEFROM LAPTOPUNIONSELECT MODEL, PRICEFROM PRINTER) TWHERE T.PRICE >= ALL (SELECT PRICEFROM PCUNION SELECT PRICE FROM LAPTOPUNIONSELECT PRICEFROM PRINTER);--Напишете заявка, която извежда производителя на цветния принтер с
+--най-ниска цена.SELECT MAKERFROM PRODUCTWHERE MODEL IN (SELECT MODELFROM PRINTERWHERE COLOR = 'y' AND PRICE <= ALL (SELECT PRICE FROM PRINTERWHERE COLOR = 'y'));--Напишете заявка, която извежда производителите на тези персонални
+--компютри с най-малко RAM памет, които имат най-бързи процесори.SELECT MAKERFROM PRODUCTWHERE MODEL IN (SELECT MODELFROM PC PWHERE RAM <= ALL (SELECT RAM FROM PC) AND SPEED >= ALL (SELECT SPEED FROM PCWHERE RAM = P.RAM));
